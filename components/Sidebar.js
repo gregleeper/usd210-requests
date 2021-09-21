@@ -24,7 +24,7 @@ export default function Sidebar({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
   const pathname = router.pathname;
-  console.log(pathname);
+
   const navigation = [
     {
       name: "Dashboard",

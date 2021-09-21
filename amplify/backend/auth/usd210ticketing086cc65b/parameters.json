@@ -1,6 +1,6 @@
 {
     "identityPoolName": "usd210ticketing086cc65b_identitypool_086cc65b",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "usd210086cc65b",
     "userPoolName": "usd210ticketing086cc65b_userpool_086cc65b",
     "autoVerifiedAttributes": [
