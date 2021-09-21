@@ -110,8 +110,8 @@ export default function DepartmentRequests() {
   return (
     <>
       <Header name={`Closed Requests For ${building}`} />
-      <div className="flex">
-        <div className="grid grid-cols-3 grid-rows-1 w-48 justi place-items-center  py-2">
+      <div className="md:flex">
+        <div className="flex justify-start items-center  space-x-4 py-2">
           <label
             htmlFor="username"
             className="block md:text-sm font-medium text-gray-700  sm:pt-2 place-self-center"

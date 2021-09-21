@@ -143,11 +143,11 @@ export default function Requests() {
   return (
     <>
       <Header name="All Requests" />
-      <div className="md:flex">
-        <div className="grid grid-cols-3 grid-rows-1 w-48 justi place-items-center  py-2">
+      <div className="sm:flex">
+        <div className="flex justify-start items-center  space-x-4 py-2">
           <label
             htmlFor="username"
-            className="block md:text-sm font-medium text-gray-700  sm:pt-2 place-self-center"
+            className="block md:text-sm font-medium text-gray-700  sm:pt-2 "
           >
             Status:
           </label>

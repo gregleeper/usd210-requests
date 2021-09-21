@@ -1,14 +1,14 @@
 export default function Search({ value, onChange }) {
   return (
-    <div className="grid grid-cols-3 grid-rows-1 w-96 place-items-center md:mx-4  py-2">
+    <div className="flex justify-start items-center space-x-2 md:mx-4  py-2 ">
       <label
         htmlFor="username"
-        className="block md:text-sm font-medium text-gray-700  sm:pt-2 place-self-center"
+        className="block md:text-sm font-medium text-gray-700  sm:pt-2 "
       >
         Search:
       </label>
 
-      <div className="mt-1 sm:mt-0 col-span-2">
+      <div className="mt-1 sm:mt-0">
         <input
           type="text"
           name={"searchTerm"}
