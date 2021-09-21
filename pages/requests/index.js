@@ -1,5 +1,5 @@
 import Header from "../../components/Header";
-import { API, withSSRContext } from "aws-amplify";
+import { API } from "aws-amplify";
 import { useQuery } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
@@ -171,32 +171,4 @@ export default function Requests() {
       </div>
     </>
   );
-}
-
-export async function getServerSideProps({ req, res }) {
-  const { Auth } = withSSRContext({ req });
-  console.log(Auth);
-  // try {
-  //   const user = await Auth.currentAuthenticatedUser();
-
-  //   return {
-  //     props: {
-  //       authenticated: true,
-  //       username: user.username,
-  //     },
-  //   };
-  // } catch (err) {
-  //   res.writeHead(302, { Location: "/" });
-  //   res.end();
-  //   return {
-  //     props: {
-  //       authenticated: false,
-  //     },
-  //   };
-  // }
-  return {
-    props: {
-      here: "here",
-    },
-  };
 }

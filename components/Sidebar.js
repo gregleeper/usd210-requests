@@ -24,7 +24,7 @@ export default function Sidebar({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
   const pathname = router.pathname;
-  console.log(pathname);
+
   const navigation = [
     {
       name: "Dashboard",
@@ -160,9 +160,7 @@ export default function Sidebar({ children }) {
                             />
                           ) : (
                             <div className="bg-indigo-600 rounded-full h-9 w-9 flex items-center justify-center text-white">
-                              {amplifyUser.state.user.attributes.name
-                                .match(/\b\w/g)
-                                .join("")}
+                              {amplifyUser.state.user.attributes.name}
                             </div>
                           )}
                         </div>
@@ -258,9 +256,7 @@ export default function Sidebar({ children }) {
                           />
                         ) : (
                           <div className="bg-indigo-600 rounded-full h-9 w-9 flex items-center justify-center text-white">
-                            {amplifyUser.state.user.attributes.name
-                              .match(/\b\w/g)
-                              .join("")}
+                            {amplifyUser.state.user.attributes.name}
                           </div>
                         )}
                       </div>
