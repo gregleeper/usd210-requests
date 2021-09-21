@@ -29,5 +29,37 @@
         }
       }
     }
+  },
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-usd210ticketing-dev-124341-authRole",
+      "UnauthRoleArn": "arn:aws:iam::110023552828:role/amplify-usd210ticketing-dev-124341-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::110023552828:role/amplify-usd210ticketing-dev-124341-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-usd210ticketing-dev-124341-deployment",
+      "UnauthRoleName": "amplify-usd210ticketing-dev-124341-unauthRole",
+      "StackName": "amplify-usd210ticketing-dev-124341",
+      "StackId": "arn:aws:cloudformation:us-east-1:110023552828:stack/amplify-usd210ticketing-dev-124341/78e5a310-1b03-11ec-9ad5-0e76bac974a5",
+      "AmplifyAppId": "d31bic8453e3oy"
+    },
+    "categories": {
+      "auth": {
+        "usd210ticketing086cc65b": {}
+      },
+      "notifications": {
+        "Pinpoint": {
+          "Name": "USD210TicketingKZ5Ay-dev",
+          "Id": "84dd737e990c4e0fa3d441d911c8774a",
+          "Region": "us-east-1"
+        }
+      },
+      "function": {
+        "usd210ticketing4013a1b3": {},
+        "usd210ticketing350e79b5": {
+          "deploymentBucketName": "amplify-usd210ticketing-dev-124341-deployment",
+          "s3Key": "amplify-builds/usd210ticketing350e79b5-536d4967545a63474a64-build.zip"
+        }
+      }
+    }
   }
 }
