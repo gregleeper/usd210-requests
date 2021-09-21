@@ -15,6 +15,12 @@
                     "additionalAuthenticationProviders": [
                         {
                             "authenticationType": "AWS_IAM"
+                        },
+                        {
+                            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+                            "userPoolConfig": {
+                                "userPoolId": "authusd210ticketing086cc65b"
+                            }
                         }
                     ]
                 }
@@ -49,7 +55,9 @@
     "notifications": {
         "USD210TicketingKZ5Ay": {
             "service": "Pinpoint",
-            "channels": []
+            "channels": [
+                "Email"
+            ]
         }
     }
 }

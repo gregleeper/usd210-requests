@@ -62,3 +62,4 @@ type Department @model @auth(rules: [{ allow: public }]) {
   members: [AWSEmail]
   Requests: [Request] @connection(keyName: "byDepartment", fields: ["id"])
 }
+ 
