@@ -12,15 +12,15 @@
       "AmplifyAppId": "d31bic8453e3oy"
     },
     "categories": {
-      "auth": {
-        "usd210ticketing086cc65b": {}
-      },
       "notifications": {
         "Pinpoint": {
           "Name": "USD210TicketingKZ5Ay-staging",
           "Id": "e2013c375d454dbfbbf5213a42b4e079",
           "Region": "us-east-1"
         }
+      },
+      "auth": {
+        "usd210ticketing086cc65b": {}
       },
       "function": {
         "usd210ticketing4013a1b3": {

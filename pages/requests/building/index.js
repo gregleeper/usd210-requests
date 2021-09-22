@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { API } from "aws-amplify";
+import { API, withSSRContext } from "aws-amplify";
 import { useState, useEffect } from "react";
 import * as queries from "../../../src/graphql/queries";
 import Header from "../../../components/Header";
@@ -36,4 +36,25 @@ export default function BuildingRequests() {
       <SimpleCards data={buildings} name="Buildings" linkTo="building" />
     </>
   );
+}
+
+export async function getServerSideProps({ req, res }) {
+  const { Auth } = withSSRContext({ req });
+  try {
+    const user = await Auth.currentAuthenticatedUser();
+
+    return {
+      props: {
+        authenticated: true,
+        username: user.username,
+      },
+    };
+  } catch (err) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
 }
