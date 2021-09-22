@@ -1,4 +1,4 @@
-import { API } from "aws-amplify";
+import { API, withSSRContext } from "aws-amplify";
 import * as queries from "../../src/graphql/queries";
 import * as mutations from "../../src/graphql/mutations";
 import { useQuery, useMutation } from "react-query";
@@ -8,11 +8,16 @@ import TextArea from "../../components/TextArea";
 import Select from "../../components/Select";
 import useForm from "../../lib/useForm";
 import useAmplifyAuth from "../../lib/useAmplifyAuth";
+import SuccessAlert from "../../components/SuccessAlert";
+import ErrorAlert from "../../components/ErrorAlert";
 
 export default function CreateRequest() {
   const amplifyUser = useAmplifyAuth();
   const [buildings, setBuildings] = useState([]);
   const [departments, setDepartments] = useState([]);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const [newReqID, setNewReqID] = useState("");
   const urgency = [
     { id: 1, name: "1" },
     { id: 2, name: "2" },
@@ -20,6 +25,28 @@ export default function CreateRequest() {
     { id: 4, name: "4" },
     { id: 5, name: "5" },
   ];
+
+  useEffect(() => {
+    const timeId = setTimeout(() => {
+      // After 3 seconds set the show value to false
+      setShowSuccessAlert(false);
+    }, 5000);
+
+    return () => {
+      clearTimeout(timeId);
+    };
+  }, [showSuccessAlert]);
+
+  useEffect(() => {
+    const timeId = setTimeout(() => {
+      // After 3 seconds set the show value to false
+      setShowErrorAlert(false);
+    }, 5000);
+
+    return () => {
+      clearTimeout(timeId);
+    };
+  }, [showErrorAlert]);
 
   const buildingsData = useQuery(
     "buildings",
@@ -81,12 +108,14 @@ export default function CreateRequest() {
     },
     {
       onSuccess: (data) => {
-        console.log(data);
+        setNewReqID(data.data.createRequest.id);
+        setShowSuccessAlert(true);
       },
     },
     {
       onError: (error) => {
         console.log(error);
+        setShowErrorAlert(true);
       },
     }
   );
@@ -115,88 +144,130 @@ export default function CreateRequest() {
     }
   }
 
+  function AlertDisplay() {
+    if (!showSuccessAlert && !showErrorAlert) {
+      return null;
+    } else if (showErrorAlert) {
+      return (
+        <div className=" relative">
+          <ErrorAlert />
+        </div>
+      );
+    } else {
+      return (
+        <div className=" relative">
+          <SuccessAlert id={newReqID} />
+        </div>
+      );
+    }
+  }
+
   return (
-    <form
-      className="space-y-8 divide-y divide-gray-200"
-      onSubmit={handleSubmit}
-    >
-      <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
-        <div>
+    <>
+      <AlertDisplay />
+      <form
+        className="space-y-8 divide-y divide-gray-200"
+        onSubmit={handleSubmit}
+      >
+        <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
           <div>
-            <h3 className="text-lg leading-6 font-medium text-gray-900">
-              Create a New Request
-            </h3>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500">
-              Be as descriptive as possible in your request.
-            </p>
+            <div>
+              <h3 className="text-lg leading-6 font-medium text-gray-900">
+                Create a New Request
+              </h3>
+              <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                Be as descriptive as possible in your request.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      <TextInput
-        label="Summary"
-        inputAutoComplete="summary"
-        inputName="summary"
-        inputId="summamry"
-        handleChange={handleChange}
-        inputValue={inputs.summary}
-      />
+        <TextInput
+          label="Summary"
+          inputAutoComplete="summary"
+          inputName="summary"
+          inputId="summamry"
+          handleChange={handleChange}
+          inputValue={inputs.summary}
+        />
 
-      <Select
-        selectId="buildingID"
-        selectName="buildingID"
-        data={buildings}
-        label="Building"
-        value={inputs.building}
-        handleChange={handleChange}
-      />
-      <Select
-        selectId="departmentID"
-        selectName="departmentID"
-        data={departments}
-        label="Department"
-        value={inputs.department}
-        handleChange={handleChange}
-      />
-      <TextArea
-        label="Description of Request"
-        inputAutoComplete="description"
-        inputName="description"
-        inputId="description"
-        handleChange={handleChange}
-        inputValue={inputs.description}
-      />
-      <Select
-        selectId="urgency"
-        selectName="urgency"
-        data={urgency}
-        label="Urgency"
-        value={inputs.urgency}
-        handleChange={handleChange}
-      />
-      <TextInput
-        label="Room/Location"
-        inputAutoComplete="room"
-        inputName="room"
-        inputId="room"
-        handleChange={handleChange}
-        inputValue={inputs.room}
-      />
-      <div className="pt-5">
-        <div className="flex justify-end">
-          <button
-            type="button"
-            className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Save
-          </button>
+        <Select
+          selectId="buildingID"
+          selectName="buildingID"
+          data={buildings}
+          label="Building"
+          value={inputs.building}
+          handleChange={handleChange}
+        />
+        <Select
+          selectId="departmentID"
+          selectName="departmentID"
+          data={departments}
+          label="Department"
+          value={inputs.department}
+          handleChange={handleChange}
+        />
+        <TextArea
+          label="Description of Request"
+          inputAutoComplete="description"
+          inputName="description"
+          inputId="description"
+          handleChange={handleChange}
+          inputValue={inputs.description}
+        />
+        <Select
+          selectId="urgency"
+          selectName="urgency"
+          data={urgency}
+          label="Urgency"
+          value={inputs.urgency}
+          handleChange={handleChange}
+        />
+        <TextInput
+          label="Room/Location"
+          inputAutoComplete="room"
+          inputName="room"
+          inputId="room"
+          handleChange={handleChange}
+          inputValue={inputs.room}
+        />
+        <div className="pt-5">
+          <div className="flex justify-end">
+            <button
+              type="button"
+              className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Save
+            </button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </>
   );
+}
+
+export async function getServerSideProps({ req, res }) {
+  const { Auth } = withSSRContext({ req });
+  try {
+    const user = await Auth.currentAuthenticatedUser();
+
+    return {
+      props: {
+        authenticated: true,
+        username: user.username,
+      },
+    };
+  } catch (err) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
 }

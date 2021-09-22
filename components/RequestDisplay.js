@@ -14,7 +14,7 @@ export default function RequestDisplay({
   return (
     <>
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div className="flex px-4 py-5 sm:px-6 items-center justify-between">
+        <div className="flex px-4 py-5 sm:px-6 items-center justify-between ">
           <div>
             <h3 className="text-lg leading-6 font-medium text-gray-900">
               Request Information
@@ -23,21 +23,21 @@ export default function RequestDisplay({
               Details, notes, and status of the request.
             </p>
           </div>
-          <div className="md:flex md:justify-evenly md:items-center space-y-1 text-xs sm:text-sm">
-            <div className="text-right">
+          <div className="md:flex md:justify-evenly mditems-center  space-y-1 md:space-y-0 text-xs sm:text-sm">
+            <div className="">
               <button
                 type="button"
                 onClick={handleOpenSlider}
-                className="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm sm:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="ml-3 inline-flex items-center px-3 py-2 border border-transparent rounded-md shadow-sm sm:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Add Note
               </button>
             </div>
-            <div className=" text-right">
+            <div className="">
               <button
                 type="button"
                 onClick={handleCompletionChange}
-                className="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm sm:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="ml-3 inline-flex items-center px-3 py-2 border border-transparent rounded-md shadow-sm sm:text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 {request.completed ? `Mark Not Completed` : `Mark Completed`}
               </button>

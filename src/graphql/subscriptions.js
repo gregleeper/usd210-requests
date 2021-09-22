@@ -8,6 +8,9 @@ export const onCreateNote = /* GraphQL */ `
       requestID
       content
       createdBy
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -20,6 +23,9 @@ export const onUpdateNote = /* GraphQL */ `
       requestID
       content
       createdBy
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -32,6 +38,9 @@ export const onDeleteNote = /* GraphQL */ `
       requestID
       content
       createdBy
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -42,49 +51,64 @@ export const onCreateRequest = /* GraphQL */ `
     onCreateRequest {
       id
       dateCompleted
-      notes {
-        items {
-          id
-          requestID
-          content
-          createdBy
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       description
       urgency
       room
       summary
       requestor
       completed
-      Department {
-        id
-        name
-        manager
-        members
-        Requests {
-          nextToken
+      buildingID
+      departmentID
+      baseType
+      createdAt
+      _version
+      _deleted
+      _lastChangedAt
+      updatedAt
+      notes {
+        items {
+          id
+          requestID
+          content
+          createdBy
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
         }
-        createdAt
-        updatedAt
+        nextToken
+        startedAt
       }
       Building {
         id
         name
         leaders
-        Requests {
-          nextToken
-        }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
+        Requests {
+          nextToken
+          startedAt
+        }
       }
-      buildingID
-      departmentID
-      baseType
-      createdAt
-      updatedAt
+      Department {
+        id
+        name
+        manager
+        members
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+        Requests {
+          nextToken
+          startedAt
+        }
+      }
     }
   }
 `;
@@ -93,49 +117,64 @@ export const onUpdateRequest = /* GraphQL */ `
     onUpdateRequest {
       id
       dateCompleted
-      notes {
-        items {
-          id
-          requestID
-          content
-          createdBy
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       description
       urgency
       room
       summary
       requestor
       completed
-      Department {
-        id
-        name
-        manager
-        members
-        Requests {
-          nextToken
+      buildingID
+      departmentID
+      baseType
+      createdAt
+      _version
+      _deleted
+      _lastChangedAt
+      updatedAt
+      notes {
+        items {
+          id
+          requestID
+          content
+          createdBy
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
         }
-        createdAt
-        updatedAt
+        nextToken
+        startedAt
       }
       Building {
         id
         name
         leaders
-        Requests {
-          nextToken
-        }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
+        Requests {
+          nextToken
+          startedAt
+        }
       }
-      buildingID
-      departmentID
-      baseType
-      createdAt
-      updatedAt
+      Department {
+        id
+        name
+        manager
+        members
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+        Requests {
+          nextToken
+          startedAt
+        }
+      }
     }
   }
 `;
@@ -144,49 +183,64 @@ export const onDeleteRequest = /* GraphQL */ `
     onDeleteRequest {
       id
       dateCompleted
-      notes {
-        items {
-          id
-          requestID
-          content
-          createdBy
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       description
       urgency
       room
       summary
       requestor
       completed
-      Department {
-        id
-        name
-        manager
-        members
-        Requests {
-          nextToken
+      buildingID
+      departmentID
+      baseType
+      createdAt
+      _version
+      _deleted
+      _lastChangedAt
+      updatedAt
+      notes {
+        items {
+          id
+          requestID
+          content
+          createdBy
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
         }
-        createdAt
-        updatedAt
+        nextToken
+        startedAt
       }
       Building {
         id
         name
         leaders
-        Requests {
-          nextToken
-        }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
+        Requests {
+          nextToken
+          startedAt
+        }
       }
-      buildingID
-      departmentID
-      baseType
-      createdAt
-      updatedAt
+      Department {
+        id
+        name
+        manager
+        members
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+        Requests {
+          nextToken
+          startedAt
+        }
+      }
     }
   }
 `;
@@ -196,6 +250,11 @@ export const onCreateBuilding = /* GraphQL */ `
       id
       name
       leaders
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
       Requests {
         items {
           id
@@ -210,12 +269,14 @@ export const onCreateBuilding = /* GraphQL */ `
           departmentID
           baseType
           createdAt
+          _version
+          _deleted
+          _lastChangedAt
           updatedAt
         }
         nextToken
+        startedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -225,6 +286,11 @@ export const onUpdateBuilding = /* GraphQL */ `
       id
       name
       leaders
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
       Requests {
         items {
           id
@@ -239,12 +305,14 @@ export const onUpdateBuilding = /* GraphQL */ `
           departmentID
           baseType
           createdAt
+          _version
+          _deleted
+          _lastChangedAt
           updatedAt
         }
         nextToken
+        startedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -254,6 +322,11 @@ export const onDeleteBuilding = /* GraphQL */ `
       id
       name
       leaders
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
       Requests {
         items {
           id
@@ -268,12 +341,14 @@ export const onDeleteBuilding = /* GraphQL */ `
           departmentID
           baseType
           createdAt
+          _version
+          _deleted
+          _lastChangedAt
           updatedAt
         }
         nextToken
+        startedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -284,6 +359,11 @@ export const onCreateDepartment = /* GraphQL */ `
       name
       manager
       members
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
       Requests {
         items {
           id
@@ -298,12 +378,14 @@ export const onCreateDepartment = /* GraphQL */ `
           departmentID
           baseType
           createdAt
+          _version
+          _deleted
+          _lastChangedAt
           updatedAt
         }
         nextToken
+        startedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -314,6 +396,11 @@ export const onUpdateDepartment = /* GraphQL */ `
       name
       manager
       members
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
       Requests {
         items {
           id
@@ -328,12 +415,14 @@ export const onUpdateDepartment = /* GraphQL */ `
           departmentID
           baseType
           createdAt
+          _version
+          _deleted
+          _lastChangedAt
           updatedAt
         }
         nextToken
+        startedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -344,6 +433,11 @@ export const onDeleteDepartment = /* GraphQL */ `
       name
       manager
       members
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
       Requests {
         items {
           id
@@ -358,12 +452,14 @@ export const onDeleteDepartment = /* GraphQL */ `
           departmentID
           baseType
           createdAt
+          _version
+          _deleted
+          _lastChangedAt
           updatedAt
         }
         nextToken
+        startedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;

@@ -8,6 +8,9 @@ export const getNote = /* GraphQL */ `
       requestID
       content
       createdBy
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -25,10 +28,43 @@ export const listNotes = /* GraphQL */ `
         requestID
         content
         createdBy
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const syncNotes = /* GraphQL */ `
+  query SyncNotes(
+    $filter: ModelNoteFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncNotes(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        requestID
+        content
+        createdBy
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
     }
   }
 `;
@@ -37,49 +73,64 @@ export const getRequest = /* GraphQL */ `
     getRequest(id: $id) {
       id
       dateCompleted
-      notes {
-        items {
-          id
-          requestID
-          content
-          createdBy
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       description
       urgency
       room
       summary
       requestor
       completed
-      Department {
-        id
-        name
-        manager
-        members
-        Requests {
-          nextToken
+      buildingID
+      departmentID
+      baseType
+      createdAt
+      _version
+      _deleted
+      _lastChangedAt
+      updatedAt
+      notes {
+        items {
+          id
+          requestID
+          content
+          createdBy
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
         }
-        createdAt
-        updatedAt
+        nextToken
+        startedAt
       }
       Building {
         id
         name
         leaders
-        Requests {
-          nextToken
-        }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
+        Requests {
+          nextToken
+          startedAt
+        }
       }
-      buildingID
-      departmentID
-      baseType
-      createdAt
-      updatedAt
+      Department {
+        id
+        name
+        manager
+        members
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+        Requests {
+          nextToken
+          startedAt
+        }
+      }
     }
   }
 `;
@@ -93,139 +144,48 @@ export const listRequests = /* GraphQL */ `
       items {
         id
         dateCompleted
-        notes {
-          nextToken
-        }
         description
         urgency
         room
         summary
         requestor
         completed
-        Department {
-          id
-          name
-          manager
-          members
-          createdAt
-          updatedAt
+        buildingID
+        departmentID
+        baseType
+        createdAt
+        _version
+        _deleted
+        _lastChangedAt
+        updatedAt
+        notes {
+          nextToken
+          startedAt
         }
         Building {
           id
           name
           leaders
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
-        buildingID
-        departmentID
-        baseType
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getBuilding = /* GraphQL */ `
-  query GetBuilding($id: ID!) {
-    getBuilding(id: $id) {
-      id
-      name
-      leaders
-      Requests {
-        items {
+        Department {
           id
-          dateCompleted
-          description
-          urgency
-          room
-          summary
-          requestor
-          completed
-          buildingID
-          departmentID
-          baseType
+          name
+          manager
+          members
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listBuildings = /* GraphQL */ `
-  query ListBuildings(
-    $filter: ModelBuildingFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listBuildings(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        leaders
-        Requests {
-          nextToken
-        }
-        createdAt
-        updatedAt
       }
       nextToken
-    }
-  }
-`;
-export const getDepartment = /* GraphQL */ `
-  query GetDepartment($id: ID!) {
-    getDepartment(id: $id) {
-      id
-      name
-      manager
-      members
-      Requests {
-        items {
-          id
-          dateCompleted
-          description
-          urgency
-          room
-          summary
-          requestor
-          completed
-          buildingID
-          departmentID
-          baseType
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listDepartments = /* GraphQL */ `
-  query ListDepartments(
-    $filter: ModelDepartmentFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listDepartments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        manager
-        members
-        Requests {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
+      startedAt
     }
   }
 `;
@@ -249,37 +209,48 @@ export const requestsByBuilding = /* GraphQL */ `
       items {
         id
         dateCompleted
-        notes {
-          nextToken
-        }
         description
         urgency
         room
         summary
         requestor
         completed
-        Department {
-          id
-          name
-          manager
-          members
-          createdAt
-          updatedAt
+        buildingID
+        departmentID
+        baseType
+        createdAt
+        _version
+        _deleted
+        _lastChangedAt
+        updatedAt
+        notes {
+          nextToken
+          startedAt
         }
         Building {
           id
           name
           leaders
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
-        buildingID
-        departmentID
-        baseType
-        createdAt
-        updatedAt
+        Department {
+          id
+          name
+          manager
+          members
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
       }
       nextToken
+      startedAt
     }
   }
 `;
@@ -303,37 +274,48 @@ export const requestsByUrgency = /* GraphQL */ `
       items {
         id
         dateCompleted
-        notes {
-          nextToken
-        }
         description
         urgency
         room
         summary
         requestor
         completed
-        Department {
-          id
-          name
-          manager
-          members
-          createdAt
-          updatedAt
+        buildingID
+        departmentID
+        baseType
+        createdAt
+        _version
+        _deleted
+        _lastChangedAt
+        updatedAt
+        notes {
+          nextToken
+          startedAt
         }
         Building {
           id
           name
           leaders
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
-        buildingID
-        departmentID
-        baseType
-        createdAt
-        updatedAt
+        Department {
+          id
+          name
+          manager
+          members
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
       }
       nextToken
+      startedAt
     }
   }
 `;
@@ -357,37 +339,48 @@ export const requestsByRequestor = /* GraphQL */ `
       items {
         id
         dateCompleted
-        notes {
-          nextToken
-        }
         description
         urgency
         room
         summary
         requestor
         completed
-        Department {
-          id
-          name
-          manager
-          members
-          createdAt
-          updatedAt
+        buildingID
+        departmentID
+        baseType
+        createdAt
+        _version
+        _deleted
+        _lastChangedAt
+        updatedAt
+        notes {
+          nextToken
+          startedAt
         }
         Building {
           id
           name
           leaders
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
-        buildingID
-        departmentID
-        baseType
-        createdAt
-        updatedAt
+        Department {
+          id
+          name
+          manager
+          members
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
       }
       nextToken
+      startedAt
     }
   }
 `;
@@ -411,37 +404,300 @@ export const requestsByDepartment = /* GraphQL */ `
       items {
         id
         dateCompleted
-        notes {
-          nextToken
-        }
         description
         urgency
         room
         summary
         requestor
         completed
-        Department {
-          id
-          name
-          manager
-          members
-          createdAt
-          updatedAt
+        buildingID
+        departmentID
+        baseType
+        createdAt
+        _version
+        _deleted
+        _lastChangedAt
+        updatedAt
+        notes {
+          nextToken
+          startedAt
         }
         Building {
           id
           name
           leaders
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
+        Department {
+          id
+          name
+          manager
+          members
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncRequests = /* GraphQL */ `
+  query SyncRequests(
+    $filter: ModelRequestFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncRequests(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        dateCompleted
+        description
+        urgency
+        room
+        summary
+        requestor
+        completed
         buildingID
         departmentID
         baseType
         createdAt
+        _version
+        _deleted
+        _lastChangedAt
         updatedAt
+        notes {
+          nextToken
+          startedAt
+        }
+        Building {
+          id
+          name
+          leaders
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        Department {
+          id
+          name
+          manager
+          members
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
       }
       nextToken
+      startedAt
+    }
+  }
+`;
+export const getBuilding = /* GraphQL */ `
+  query GetBuilding($id: ID!) {
+    getBuilding(id: $id) {
+      id
+      name
+      leaders
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      Requests {
+        items {
+          id
+          dateCompleted
+          description
+          urgency
+          room
+          summary
+          requestor
+          completed
+          buildingID
+          departmentID
+          baseType
+          createdAt
+          _version
+          _deleted
+          _lastChangedAt
+          updatedAt
+        }
+        nextToken
+        startedAt
+      }
+    }
+  }
+`;
+export const listBuildings = /* GraphQL */ `
+  query ListBuildings(
+    $filter: ModelBuildingFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listBuildings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        leaders
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+        Requests {
+          nextToken
+          startedAt
+        }
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncBuildings = /* GraphQL */ `
+  query SyncBuildings(
+    $filter: ModelBuildingFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncBuildings(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        leaders
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+        Requests {
+          nextToken
+          startedAt
+        }
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getDepartment = /* GraphQL */ `
+  query GetDepartment($id: ID!) {
+    getDepartment(id: $id) {
+      id
+      name
+      manager
+      members
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      Requests {
+        items {
+          id
+          dateCompleted
+          description
+          urgency
+          room
+          summary
+          requestor
+          completed
+          buildingID
+          departmentID
+          baseType
+          createdAt
+          _version
+          _deleted
+          _lastChangedAt
+          updatedAt
+        }
+        nextToken
+        startedAt
+      }
+    }
+  }
+`;
+export const listDepartments = /* GraphQL */ `
+  query ListDepartments(
+    $filter: ModelDepartmentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDepartments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        manager
+        members
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+        Requests {
+          nextToken
+          startedAt
+        }
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncDepartments = /* GraphQL */ `
+  query SyncDepartments(
+    $filter: ModelDepartmentFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncDepartments(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        manager
+        members
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+        Requests {
+          nextToken
+          startedAt
+        }
+      }
+      nextToken
+      startedAt
     }
   }
 `;

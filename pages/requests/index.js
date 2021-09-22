@@ -1,8 +1,6 @@
 import Header from "../../components/Header";
-import { API } from "aws-amplify";
+import { API, withSSRContext } from "aws-amplify";
 import { useQuery } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
-
 import { useState, useEffect } from "react";
 import * as queries from "../../src/graphql/queries";
 import Spinner from "../../components/Spinner";
@@ -171,4 +169,24 @@ export default function Requests() {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps({ req, res }) {
+  const { Auth } = withSSRContext({ req });
+  try {
+    const user = await Auth.currentAuthenticatedUser();
+    return {
+      props: {
+        authenticated: true,
+        username: user.attributes.email,
+      },
+    };
+  } catch (err) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
 }
