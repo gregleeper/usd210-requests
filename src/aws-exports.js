@@ -23,7 +23,7 @@ const awsmobile = {
       "aws.cognito.signin.user.admin",
     ],
     redirectSignIn: "https://usd210-requests.vercel.app/requests",
-    redirectSignOut: "https://usd210-requests.vercel.app/",
+    redirectSignOut: "https://usd210-requests.vercel.app/requests",
     responseType: "code",
   },
   federationTarget: "COGNITO_USER_POOLS",
